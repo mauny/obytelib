@@ -27,6 +27,31 @@ function check_command () {
     fi
 }
 
+function create_prims () {
+    # comment out primitives unknown to the current version of ocamlrun
+    declare -A PRIMITIVES
+    echo -n "Primitives unknown to ocamlrun $(ocamlrun -vnum):"
+    cp src/prim.ml.tpl src/prim.ml
+    for p in \
+        $(cat src/prim.ml |
+              awk '{ if ($1 == "external") { print $2 }; }'); do
+        PRIMITIVES[$p]='unknown'
+    done
+    for p in $(ocamlrun -p); do
+        PRIMITIVES[$p]='known'
+    done
+    for p in ${!PRIMITIVES[*]}; do
+        case ${PRIMITIVES[$p]} in
+            'unknown')
+                echo -n " $p"
+                sed src/prim.ml -i \
+                    -e "s/^\(external $p : .*\)$/(*\1*)/" \
+                    -e "s/^\( *| \"$p\".*\)$/(*\1*)/"
+                ;;
+        esac
+    done
+    echo '.'
+}
 ###
 
 check_command "ocamlbuild"
@@ -34,6 +59,9 @@ check_command "mkdir"
 check_command "pwd"
 check_command "cp"
 check_command "rm"
+check_command "ocamlrun"
+
+create_prims
 
 ###
 

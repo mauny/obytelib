@@ -67,7 +67,8 @@ external caml_dynlink_close_lib : dll_handle -> unit = "caml_dynlink_close_lib"
 external caml_dynlink_get_current_libs : unit -> dll_handle array = "caml_dynlink_get_current_libs"
 external caml_dynlink_lookup_symbol : dll_handle -> string -> dll_address = "caml_dynlink_lookup_symbol"
 external caml_dynlink_open_lib : dll_mode -> string -> dll_handle = "caml_dynlink_open_lib"
-(*external caml_ensure_stack_capacity : int -> unit = "caml_ensure_stack_capacity"*) let caml_ensure_stack_capacity _ = ()
+let caml_ensure_stack_capacity _ = ()
+(*external caml_ensure_stack_capacity : int -> unit = "caml_ensure_stack_capacity"*)
 external caml_eq_float : float -> float -> bool = "caml_eq_float"
 external caml_equal : 'a -> 'a -> bool = "caml_equal"
 external caml_exp_float : float -> float = "caml_exp_float"
@@ -276,11 +277,16 @@ external caml_string_set : string -> int -> char -> unit = "caml_string_set"
 external caml_sub_float : float -> float -> float = "caml_sub_float"
 external caml_sys_chdir : string -> unit = "caml_sys_chdir"
 external caml_sys_close : int -> unit = "caml_sys_close"
-(*external caml_sys_const_big_endian : unit -> bool = "caml_sys_const_big_endian"*) let caml_sys_const_big_endian () = Sys.big_endian
-(*external caml_sys_const_ostype_cygwin : unit -> bool = "caml_sys_const_ostype_cygwin"*) let caml_sys_const_ostype_cygwin () = Sys.os_type = "Cygwin"
-(*external caml_sys_const_ostype_unix : unit -> bool = "caml_sys_const_ostype_unix"*) let caml_sys_const_ostype_unix () = Sys.os_type = "Unix"
-(*external caml_sys_const_ostype_win32 : unit -> bool = "caml_sys_const_ostype_win32"*) let caml_sys_const_ostype_win32 () = Sys.os_type = "Win32"
-(*external caml_sys_const_word_size : unit -> int = "caml_sys_const_word_size"*) let caml_sys_const_word_size () = Sys.word_size
+let caml_sys_const_big_endian () = Sys.big_endian
+(*external caml_sys_const_big_endian : unit -> bool = "caml_sys_const_big_endian"*)
+let caml_sys_const_ostype_cygwin () = Sys.os_type = "Cygwin"
+(*external caml_sys_const_ostype_cygwin : unit -> bool = "caml_sys_const_ostype_cygwin"*)
+let caml_sys_const_ostype_unix () = Sys.os_type = "Unix"
+(*external caml_sys_const_ostype_unix : unit -> bool = "caml_sys_const_ostype_unix"*)
+let caml_sys_const_ostype_win32 () = Sys.os_type = "Win32"
+(*external caml_sys_const_ostype_win32 : unit -> bool = "caml_sys_const_ostype_win32"*)
+let caml_sys_const_word_size () = Sys.word_size
+(*external caml_sys_const_word_size : unit -> int = "caml_sys_const_word_size"*)
 external caml_sys_exit : int -> 'a = "caml_sys_exit"
 external caml_sys_file_exists : string -> bool = "caml_sys_file_exists"
 external caml_sys_get_argv : unit -> string * string array = "caml_sys_get_argv"
